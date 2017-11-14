@@ -7,8 +7,9 @@ $(document).ready(function() {
             username: $("#username").val(),
             email: $("#email").val(),
             password: $("#password").val(),
+            passwordMatch: $("#passwordMatch").val()
         }
-
+        
         $.ajax({
             type: "POST", 
             url: "/api/newUser", 

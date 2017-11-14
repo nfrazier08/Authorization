@@ -20,9 +20,12 @@ app.post("/api/newUser", function(req, res){
     req.checkBody('email', 'The email you entered is invalid.').isEmail();
     req.checkBody('email', 'Email must be between 4-100 characters long').len(4,100);
     req.checkBody('password', 'Password must be between 2-10 characters long.').len(2,10);
+    req.checkBody('password', 'Password field cannot be empty').notEmpty();
     req.checkBody('password', 'Password must include one lowercase character, one uppercase letter, a number and a special character').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, "i");
-    req.checkBody('passwordMatch', 'Password must be between 2-10 characters long.').len(2-10);
-    // req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
+    req.checkBody('passwordMatch', 'Password Match field cannot be empty').notEmpty();    
+    req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
+
+    //Nicole90!
 
     var errors = req.validationErrors();
     console.log(errors)
@@ -42,6 +45,7 @@ app.post("/api/newUser", function(req, res){
             username: req.body.username, 
             email: req.body.email, 
             password: req.body.password, 
+            passwordMatch: req.body.passwordMatch
         })
             .then(function(user){
                 returnObject.user = user;

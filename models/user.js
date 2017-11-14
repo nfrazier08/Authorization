@@ -19,7 +19,14 @@ module.exports = function(sequelize, DataTypes){
             validate: {
                 len:[2, 10]
             }
-        }   
+        },
+        passwordMatch: {
+            type: DataTypes.STRING,
+            allowNull:false,
+            validate: {
+                len: [2, 10]
+            }
+        }
         
     });
 
