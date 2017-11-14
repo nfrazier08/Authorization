@@ -4,9 +4,10 @@
         <h1>Registration</h1>
     </div>
 
+    <h3>reg error:</h3>
    {{#if errors}}
-        {{#each errorsHbsCall}}
-            {{errors.msg}}
+        {{#each errors}}
+            {{error.msg}}
         {{/each}}
    {{/if}}
 

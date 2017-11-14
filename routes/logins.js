@@ -26,12 +26,12 @@ app.post("/api/newUser", function(req, res){
     var errors = req.validationErrors();
     if(errors){
         var errorObject = {
-            errorsHbsCall:errors
+           errors:errors
         }
-        console.log(`errors: ${JSON.stringify(errors)}`);
+        console.log(`errors: ${JSON.stringify(errors)}`);        
+        res.render("index", errorObject);
         console.log("***error object***")
-        res.render("successPage", errorObject)
-        console.log(errorObject.errorsHbsCall)
+        console.log(errorObject);
     }
 
     db.User.create({
