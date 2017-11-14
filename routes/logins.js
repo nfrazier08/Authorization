@@ -12,6 +12,7 @@ app.get('/', function(req, res){
 
 //Adding new user to the database route!
 app.post("/api/newUser", function(req, res){
+    var returnObject = {};
     //Add code here for validation?? Seems logical!
                                 //Error message to be returned!
     req.checkBody('username', 'Username field cannot be empty.').notEmpty();
@@ -21,27 +22,34 @@ app.post("/api/newUser", function(req, res){
     req.checkBody('password', 'Password must be between 2-10 characters long.').len(2,10);
     req.checkBody('password', 'Password must include one lowercase character, one uppercase letter, a number and a special character').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, "i");
     req.checkBody('passwordMatch', 'Password must be between 2-10 characters long.').len(2-10);
-    req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
+    // req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
 
     var errors = req.validationErrors();
+    console.log(errors)
     if(errors){
-        var errorObject = {
-           errors:errors
-        }
-        console.log(`errors: ${JSON.stringify(errors)}`);        
-        res.render("index", errorObject);
-        console.log("***error object***")
-        console.log(errorObject);
+        returnObject.errors = errors;
+        // console.log(`errors: ${JSON.stringify(errors)}`);        
+        // res.render("index", errorObject);
+        // console.log("***error object***")
+        // console.log(errorObject);
+        res.json(returnObject)
+        console.log("***This is return object****")
+        console.log(returnObject)
     }
 
-    db.User.create({
-        username: req.body.username, 
-        email: req.body.email, 
-        password: req.body.password, 
-    })
-    .then(function(user){
-        res.json(user)
-    })
+    else {
+        db.User.create({
+            username: req.body.username, 
+            email: req.body.email, 
+            password: req.body.password, 
+        })
+            .then(function(user){
+                returnObject.user = user;
+                res.json(returnObject)
+                console.log("***This is return object****")
+                console.log(returnObject)        
+        })
+    }
 })
 
 //Successful push to database will reroute user to this page
