@@ -5,11 +5,11 @@
     </div>
 
     <h3>reg error:</h3>
-   {{#if errors}}
+    {{#if error}}
         {{#each errors}}
-            {{error.msg}}
+            {{this.msg}}
         {{/each}}
-   {{/if}}
+    {{/if}} 
 
     <div class="row">
         <div class="col-lg-3"></div>
@@ -40,6 +40,15 @@
             </div>
     </div>
 
+
+<!--This is the modal-->
+<div class="modal fade bs-example-modal-sm text-center" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <h2 id="regErrors"></h2>            
+        </div>
+    </div>
+</div>
 
 
 </div>

@@ -32,10 +32,8 @@ app.post("/api/newUser", function(req, res){
     if(errors){
         returnObject.errors = errors;
         // console.log(`errors: ${JSON.stringify(errors)}`);        
-        // res.render("index", errorObject);
-        // console.log("***error object***")
-        // console.log(errorObject);
-        res.json(returnObject)
+        res.render("index", returnObject);
+        // res.json(returnObject)
         console.log("***This is return object****")
         console.log(returnObject)
     }
