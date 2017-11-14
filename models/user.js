@@ -14,12 +14,7 @@ module.exports = function(sequelize, DataTypes){
         password: {
             type: DataTypes.STRING,
             allowNull:false
-        },
-        passwordMatch:{
-            type: DataTypes.STRING,
-            allowNull:false
-        }
-           
+        }         
     })
 
     return User;

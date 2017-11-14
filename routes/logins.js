@@ -12,18 +12,20 @@ app.get('/', function(req, res){
 
 //Adding new user to the database route!
 app.post("/api/newUser", function(req, res){
+    //Add code here for validation?? Seems logical!
+
+
     db.User.create({
         username: req.body.username, 
         email: req.body.email, 
         password: req.body.password, 
-        passwordMatch: req.body.passwordMatch
     })
     .then(function(user){
         res.json(user)
     })
 })
 
-//Successful Registration
+//Successful push to database will reroute user to this page
 app.get("/completeReg/:username", function(req, res){
     db.User.findOne({
         where: {

@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var expressValidator = require('express-validator');
 var methodOverride = require("method-override");
 
 var PORT = process.env.PORT || 3000;
@@ -10,6 +11,7 @@ var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
+app.use(expressValidator([options])); //This line must be after any body parser included
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
