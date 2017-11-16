@@ -9,12 +9,17 @@ const saltRounds = 10;
 // ==========
 module.exports = function(app) {
 
-//Home page route
-app.get('/', function(req, res){    
+//Homepage Route
+app.get('/', function(req, res){
+    res.render("home")
+})
+
+// //Login page route
+app.get('/register', function(req, res){    
       res.render("index");
 })
 
-app.post("/success", function (req, res){
+app.post("/register", function (req, res){
     
     //Console.log to see if I am getting the correct NAME values
     console.log(req.body.username);
