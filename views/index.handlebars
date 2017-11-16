@@ -6,6 +6,19 @@
 
     <div class="row">
         <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            {{#if errors}}
+                {{#each errors}}
+                    <div class="alert alert-danger">
+                        {{this.msg}}
+                    </div>    
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3"></div>
             <div class="col-lg-6">
                 <form method="POST" action="/success">
                     <div class="form-group">
