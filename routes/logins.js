@@ -1,8 +1,10 @@
-// Requiring our Todo model
+// Requiring our model
 var db = require('../models');
+var bcrypt = require('bcrypt');
+//Higher the salt rounds, the slower it is to hash the password
+const saltRounds = 10;
 
 
-//DO A METHOD FORM POST AND A RES.JSON
 // Routes
 // ==========
 module.exports = function(app) {
@@ -41,13 +43,16 @@ app.post("/success", function (req, res){
     }
 
     else {
+        password = req.body.password;
         //This adds the user to the database
-        db.User.create({
-            username: req.body.username, 
-            email: req.body.email, 
-            password: req.body.password        
-        })
-        res.render("successPage");
+        bcrypt.hash(password, saltRounds, function(err, hash){
+            db.User.create({
+                username: req.body.username, 
+                email: req.body.email, 
+                password: hash                      
+            })
+            res.render("successPage");  
+        })      
     }
 })
 

@@ -1,0 +1,4 @@
+-- CREATE DATABASE auth
+
+USE auth;
+DROP TABLE users
