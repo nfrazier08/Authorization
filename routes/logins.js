@@ -18,8 +18,25 @@ app.get('/', function(req, res){
     res.render("home")
 })
 
-app.get('/successPage', function(req, res){
-    res.render("successPage")
+//Route for login page
+app.get('/login', function(req, res){
+    res.render("login")
+})
+
+//Authenticate user when they attempt to login
+//If they success in loggin in, they go to their profile page
+//If they fail, they get sent back to the login page
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/profile',
+    failureRedirect: '/login'
+}));
+
+app.get('/profile', authenticationMiddleware(), function(req, res){
+    res.render("profile")
+    //Just checking to see if the user is authenticated and logged in
+    //These two functions are integrated within passport
+    console.log(req.user)
+    console.log(req.isAuthenticated())
 })
 
 // //Login page route
@@ -71,7 +88,7 @@ app.post("/register", function (req, res){
                 if(error) throw error;
                     var userId = user.dataValues.id;                       
                     req.login(userId, function(error){
-                        res.redirect('/successPage')                    
+                        res.redirect('/profile')                    
                 });                              
             });         
         })      
@@ -86,7 +103,15 @@ passport.serializeUser(function(userId, done) {
       done(null, userId);
 });
 
+//Custom function snippet for passport that restricts a user from certain pages, unless they have logged in!
+function authenticationMiddleware () {  
+	return (req, res, next) => {
+		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
 
+	    if (req.isAuthenticated()) return next();
+	    res.redirect('/login')
+	}
+}
 
 
 
