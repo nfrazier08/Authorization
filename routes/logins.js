@@ -1,6 +1,8 @@
 // Requiring our Todo model
 var db = require('../models');
 
+
+//DO A METHOD FORM POST AND A RES.JSON
 // Routes
 // ==========
 module.exports = function(app) {
@@ -8,6 +10,22 @@ module.exports = function(app) {
 //Home page route
 app.get('/', function(req, res){    
       res.render("index");
+})
+
+app.post("/success", function (req, res){
+    
+    //Console.log to see if I am getting the correct NAME values
+    console.log(req.body.username);
+    console.log(req.body.email);
+    console.log(req.body.password);
+
+    db.User.create({
+        username: req.body.username, 
+        email: req.body.email, 
+        password: req.body.password        
+    })
+
+    res.render("successPage");
 })
 
 //Adding new user to the database route!
@@ -25,8 +43,6 @@ app.post("/api/newUser", function(req, res){
     req.checkBody('passwordMatch', 'Password Match field cannot be empty').notEmpty();    
     req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
 
-    //Nicole90!
-
     var errors = req.validationErrors();
     console.log(errors)
     if(errors){
@@ -36,6 +52,7 @@ app.post("/api/newUser", function(req, res){
         // res.json(returnObject)
         console.log("***This is return object****")
         console.log(returnObject)
+        // console.log(returnObject.errors)
     }
 
     else {
