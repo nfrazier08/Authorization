@@ -4,6 +4,10 @@ var bcrypt = require('bcrypt');
 //Higher the salt rounds, the slower it is to hash the password
 const saltRounds = 10;
 
+//Authentication Packages
+var session = require('express-session');
+var passport = require('passport');
+
 
 // Routes
 // ==========
@@ -12,6 +16,10 @@ module.exports = function(app) {
 //Homepage Route
 app.get('/', function(req, res){
     res.render("home")
+})
+
+app.get('/successPage', function(req, res){
+    res.render("successPage")
 })
 
 // //Login page route
@@ -48,33 +56,35 @@ app.post("/register", function (req, res){
     }
 
     else {
-        password = req.body.password;
+        password = req.body.password;       
         //This adds the user to the database
-        bcrypt.hash(password, saltRounds, function(err, hash){
+        bcrypt.hash(password, saltRounds, function(err, hash){            
             db.User.create({
                 username: req.body.username, 
                 email: req.body.email, 
                 password: hash                      
-            }).then(function(user){
-                var id = req.params.id;
-                db.User.findAll({                    
-                    limit:1,
-                    where: {
-                        id:req.params.id
-                    },
-                    order:[['id', 'DESC']]                     
-                }).then(function(user, results){                    
-                    req.login(results, cb)
-                    console.log(results)
-                    res.render("successPage");
-                })                 
-            })          
+            }).then(function(user, error){
+                //Need to get the newly created user id
+                console.log("**Created user**")
+                console.log(user.dataValues.id)
+
+                if(error) throw error;
+                    var userId = user.dataValues.id;                       
+                    req.login(userId, function(error){
+                        res.redirect('/successPage')                    
+                });                              
+            });         
         })      
     }
-})
+});
 
-
-
+passport.serializeUser(function(userId, done) {
+    done(null, userId);
+});
+   
+  passport.deserializeUser(function(userId, done) {    
+      done(null, userId);
+});
 
 
 
