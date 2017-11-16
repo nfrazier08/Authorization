@@ -55,8 +55,20 @@ app.post("/register", function (req, res){
                 username: req.body.username, 
                 email: req.body.email, 
                 password: hash                      
-            })
-            res.render("successPage");  
+            }).then(function(user){
+                var id = req.params.id;
+                db.User.findAll({                    
+                    limit:1,
+                    where: {
+                        id:req.params.id
+                    },
+                    order:[['id', 'DESC']]                     
+                }).then(function(user, results){                    
+                    req.login(results, cb)
+                    console.log(results)
+                    res.render("successPage");
+                })                 
+            })          
         })      
     }
 })

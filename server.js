@@ -11,7 +11,8 @@ var app = express();
 var db = require("./models");
 
 //Authentication Packages
-var session = require('express-session')
+var session = require('express-session');
+var passport = require('passport');
 
 
 // Sets up the Express app to handle data parsing
@@ -27,6 +28,8 @@ app.use(session({
     saveUninitialized: false,
     // cookie: { secure: true }
   }))
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
