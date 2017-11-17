@@ -15,6 +15,9 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
+var bcrypt = require('bcrypt');
+//Higher the salt rounds, the slower it is to hash the password
+const saltRounds = 10;
 
 
 // Sets up the Express app to handle data parsing
@@ -57,27 +60,6 @@ app.set("view engine", "handlebars");
 //REQUIRE ROUTES HERE:
 require("./routes/logins.js")(app);
 
-// passport.use(new LocalStrategy(
-//     function(username, password, done){ 
-//         console.log(username);
-//         console.log(password) 
-//         var db = require("./models");
-
-//         db.User.findOne({
-//             where: {
-//                 username: req.params.username
-//             }
-//         }).then(function(err, results, fields){
-//             console.log("***YOU GOT HERE****")
-//                 if(err) {done(err)};
-//                 if(results.length ===0){
-//                     done(null, false)
-//                 }
-//             })
-//         return done(null, 'fsdf');
-//     }
-// ));
-
 passport.use(new LocalStrategy(
     {
         username:'username',
@@ -89,11 +71,24 @@ passport.use(new LocalStrategy(
             where: {
                 username:username
             }            
-        }).then(function(user){
+        }).then(function(user, err){
             console.log("***YOU GOT HERE***")
+            // YOU NEED TO HASH THE LOGIN PASSWORD AGAIN 
+            //FIGURE OUT TO GET THE SAVED HASHED PASS FROM THE DATABASE, 
+                //CURRENTLY GETTING ONLY THE PLAIN TEXT PASSWORD
+                    //THIS SIMPLY WILL NOT DO!
+            console.log(user)
+            console.log(username)
+            console.log(password)
+            if(err) {done(err)}
+                if(!user){
+                    done(null, false);
+                }
+            })
         })
-    }       
-))
+            
+   
+)
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -107,3 +102,11 @@ db.sequelize.sync({ force: false }).then(function() {
 // bcrypt.compare(password, hash, function(err, response){
 
 // })
+
+// / })
+// hash
+
+//         bcrypt.compare(password, hash, function(err, response))
+//         return done(null, 'gsd')
+// })
+
