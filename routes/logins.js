@@ -79,7 +79,6 @@ app.post("/register", function (req, res){
             errors:errors
         })        
     }
-
     else {
         password = req.body.password;       
         //This adds the user to the database

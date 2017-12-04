@@ -28,12 +28,25 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(cookieParser());
 
-var options= {
-    host     : 'localhost',
-    user     : 'root',
-    password : 'nicole90',
-    database : 'auth'
-  };
+var options;
+
+if (process.env.JAWSDB_URL) {
+    options = mysql.createConnection(process.env.JAWSDB_URL);
+    } else {
+        options = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: 'nicole90',
+            database: 'auth'
+        });
+      }
+
+// var options= {
+//     host     : 'localhost',
+//     user     : 'root',
+//     password : 'nicole90',
+//     database : 'auth'
+//   };
 
 var sessionStore = new MySQLStore(options);
 
@@ -102,9 +115,7 @@ passport.use(new LocalStrategy(
                 else {
                     if(!user){      
                     //adding a return, there isn't one originally                              
-                    return done(null, false, {
-                        message:"Nope, don't exist"
-                        })
+                    done(null, false)
                     }
                 }                
             })
