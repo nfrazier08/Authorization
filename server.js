@@ -79,24 +79,33 @@ passport.use(new LocalStrategy(
                                 
             }            
         }).then(function(user, err){
-            console.log("***YOU GOT HERE***")     
-            console.log(user.dataValues.id)
-            const id = user.dataValues.id
-            const hash = user.dataValues.password
-            console.log(hash)
-            
-            //comparing users entered plain-text password to the hashed password stored in the database
-            bcrypt.compare(password, hash, function(err, response){
-                if (response === true){
-                    return done(null, {user_id:id})
-                } else {
-                    return done (null, false)
-                }
-            })
-              
-            if(err) {done(err)}
-                if(!user){
-                    done(null, false);
+            //Determine if there is a user
+            if (user){
+                console.log("***YOU GOT HERE***")     
+                console.log(user.dataValues.id)
+                const id = user.dataValues.id
+                const hash = user.dataValues.password
+                console.log(hash)
+                
+                //comparing users entered plain-text password to the hashed password stored in the database
+                bcrypt.compare(password, hash, function(err, response){
+                    if (response === true){
+                        return done(null, {user_id:id})
+                    } else {                    
+                        return done (null, false)
+                        }
+                    })
+                    if(err) {done(err)}
+                }              
+            // if(err) {done(err)}
+                //Determing if there is not a user
+                else {
+                    if(!user){      
+                    //adding a return, there isn't one originally                              
+                    return done(null, false, {
+                        message:"Nope, don't exist"
+                        })
+                    }
                 }                
             })
         })
