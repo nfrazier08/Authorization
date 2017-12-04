@@ -50,12 +50,17 @@ app.use(passport.session());
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-
-
 //Handlebars
 var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+//Global variable to render pages, elements if logged in or out
+//Dynamically render options
+app.use(function(req, res, next){
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+})
 
 //REQUIRE ROUTES HERE:
 require("./routes/logins.js")(app);
@@ -67,23 +72,32 @@ passport.use(new LocalStrategy(
         passReqToCallback:true
     },
     function(req, username, password, done){
+        console.log("***This is what I typed in****")          
         db.User.findOne({
             where: {
-                username:username
+                username: username
+                                
             }            
         }).then(function(user, err){
-            console.log("***YOU GOT HERE***")
-            // YOU NEED TO HASH THE LOGIN PASSWORD AGAIN 
-            //FIGURE OUT TO GET THE SAVED HASHED PASS FROM THE DATABASE, 
-                //CURRENTLY GETTING ONLY THE PLAIN TEXT PASSWORD
-                    //THIS SIMPLY WILL NOT DO!
-            console.log(user)
-            console.log(username)
-            console.log(password)
+            console.log("***YOU GOT HERE***")     
+            console.log(user.dataValues.id)
+            const id = user.dataValues.id
+            const hash = user.dataValues.password
+            console.log(hash)
+            
+            //comparing users entered plain-text password to the hashed password stored in the database
+            bcrypt.compare(password, hash, function(err, response){
+                if (response === true){
+                    return done(null, {user_id:id})
+                } else {
+                    return done (null, false)
+                }
+            })
+              
             if(err) {done(err)}
                 if(!user){
                     done(null, false);
-                }
+                }                
             })
         })
             

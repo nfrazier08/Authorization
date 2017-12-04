@@ -23,9 +23,17 @@ app.get('/login', function(req, res){
     res.render("login")
 })
 
+app.get('/logout', function(req, res){
+    //built in through passport and also destroys sessions
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+})
+
 //Authenticate user when they attempt to login
 //If they success in loggin in, they go to their profile page
 //If they fail, they get sent back to the login page
+//I added a parameter of username + password to the route
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/profile',
     failureRedirect: '/login'
