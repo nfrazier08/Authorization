@@ -37,7 +37,7 @@ app.use(cookieParser());
 //   };
 
 var options ={
-    host:'k3xio06abqa902qt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    host:'mysql://ubz8gbv50xxoso9u:yuugt9gyhwj4sxyq@k3xio06abqa902qt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/uzyqeoqq5bp0vl1g',
     user: 'ubz8gbv50xxoso9u',
     password: 'yuugt9gyhwj4sxyq',
     database: 'authPractice',
