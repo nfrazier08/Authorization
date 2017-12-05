@@ -2,7 +2,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var expressValidator = require('express-validator');
 var methodOverride = require("method-override");
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+
 
 var PORT = process.env.PORT || 3000;
 var app = express();
@@ -27,34 +28,26 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(cookieParser());
 
-var options;
+// var options;
 
-if (process.env.JAWSDB_URL) {
-    options = mysql.createConnection(process.env.JAWSDB_URL);
-    } else {
-        options = mysql.createConnection({
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'nicole90',
-            database: 'auth'
-        });
-      }
+// if (process.env.JAWSDB_URL) {
+//     options = createConnection(process.env.JAWSDB_URL);
+//     } else {
+//         options = createConnection({
+//             host: 'localhost',
+//             // port: 3306,
+//             user: 'root',
+//             password: 'nicole90',
+//             database: 'auth'
+//         });
+//       }
 
-      options.connect(function(err){
-          if(err){
-              console.log("error connecting: " + err.stack);
-              return;
-          }
-          console.log("connection as id " + options.threadId);
-      });
-
-// var options= {
-//     host     : 'localhost',
-//     user     : 'root',
-//     password : 'nicole90',
-//     database : 'auth'
-//   };
+var options= {
+    host     : 'localhost',
+    user     : 'root',
+    password : 'nicole90',
+    database : 'auth'
+  };
 
 var sessionStore = new MySQLStore(options);
 
