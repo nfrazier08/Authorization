@@ -19,7 +19,6 @@ var bcrypt = require('bcrypt');
 //Higher the salt rounds, the slower it is to hash the password
 const saltRounds = 10;
 
-
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(expressValidator()); //This line must be after any body parser included
@@ -35,6 +34,7 @@ if (process.env.JAWSDB_URL) {
     } else {
         options = mysql.createConnection({
             host: 'localhost',
+            port: 3306,
             user: 'root',
             password: 'nicole90',
             database: 'auth'
