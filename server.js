@@ -40,7 +40,8 @@ var options ={
     host:'k3xio06abqa902qt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     user: 'ubz8gbv50xxoso9u',
     password: 'yuugt9gyhwj4sxyq',
-    database: 'authPractice'
+    database: 'authPractice',
+    port: 3306
 }
 
 var sessionStore = new MySQLStore(options);
