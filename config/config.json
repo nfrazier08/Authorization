@@ -1,23 +1,23 @@
 {
-  // "development": {
-  //   "username": "root",
-  //   "password": "nicole90",
-  //   "database": "auth",
-  //   "host": "127.0.0.1",
-  //   "dialect": "mysql"
-  // },
-  // "test": {
-  //   "username": "root",
-  //   "password": "nicole90",
-  //   "database": "auth",
-  //   "host": "127.0.0.1",
-  //   "dialect": "mysql"
-  // },
+  "development": {
+    "username": "root",
+    "password": "nicole90",
+    "database": "auth",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "nicole90",
+    "database": "auth",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
   "production": {
     "username": "ubz8gbv50xxoso9u",
     "password": "yuugt9gyhwj4sxyq",
     "database": "authPractice",
-    "host": "127.0.0.1",
+    "host": "k3xio06abqa902qt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
