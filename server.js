@@ -28,26 +28,20 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(cookieParser());
 
-// var options;
+//For Local
+// var options= {
+//     host     : 'localhost',
+//     user     : 'root',
+//     password : 'nicole90',
+//     database : 'auth'
+//   };
 
-// if (process.env.JAWSDB_URL) {
-//     options = createConnection(process.env.JAWSDB_URL);
-//     } else {
-//         options = createConnection({
-//             host: 'localhost',
-//             // port: 3306,
-//             user: 'root',
-//             password: 'nicole90',
-//             database: 'auth'
-//         });
-//       }
-
-var options= {
-    host     : 'localhost',
-    user     : 'root',
-    password : 'nicole90',
-    database : 'auth'
-  };
+var options ={
+    host:'k3xio06abqa902qt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'ubz8gbv50xxoso9u',
+    password: 'yuugt9gyhwj4sxyq',
+    database: 'authPractice'
+}
 
 var sessionStore = new MySQLStore(options);
 
