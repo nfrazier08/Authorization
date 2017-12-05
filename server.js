@@ -41,6 +41,14 @@ if (process.env.JAWSDB_URL) {
         });
       }
 
+      options.connect(function(err){
+          if(err){
+              console.log("error connecting: " + err.stack);
+              return;
+          }
+          console.log("connection as id " + options.threadId);
+      });
+
 // var options= {
 //     host     : 'localhost',
 //     user     : 'root',
